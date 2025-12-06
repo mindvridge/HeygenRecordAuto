@@ -122,6 +122,48 @@ export interface BatchJob {
   updatedAt: Date;
 }
 
+// 확장된 작업 상태 (영상 생성 단계 포함)
+export type JobStatus = 'pending' | 'processing' | 'generating' | 'completed' | 'failed' | 'cancelled';
+
+// 확장된 작업 타입
+export interface Job {
+  id: string;
+  script: string;
+  filename: string;
+  status: JobStatus;
+  avatarId?: string;
+  voiceId?: string;
+  videoId?: string;
+  videoUrl?: string;
+  thumbnailUrl?: string;
+  duration?: number;
+  error?: string;
+  retryCount: number;
+  createdAt: Date;
+  startedAt?: Date;
+  completedAt?: Date;
+}
+
+// 배치 정보
+export interface BatchInfo {
+  id: string;
+  name: string;
+  totalJobs: number;
+  completedJobs: number;
+  failedJobs: number;
+  startedAt: Date;
+  estimatedEndAt?: Date;
+}
+
+// 비디오 설정
+export interface VideoSettings {
+  avatarId: string;
+  voiceId: string;
+  aspectRatio: '16:9' | '9:16' | '1:1';
+  testMode: boolean;
+  backgroundColor?: string;
+}
+
 export interface BatchConfig {
   avatarId: string;
   voiceId: string;
