@@ -134,6 +134,47 @@ export interface ExcelRow {
   [key: string]: string;
 }
 
+// 스크립트 아이템 타입 (엑셀 파싱 결과)
+export interface ScriptItem {
+  id: string;
+  script: string;
+  filename?: string;
+  avatarId?: string;
+  voiceId?: string;
+  rowNumber: number;
+}
+
+// 엑셀 유효성 검사 결과
+export interface ValidationResult {
+  isValid: boolean;
+  validItems: ScriptItem[];
+  invalidItems: Array<{
+    item: ScriptItem;
+    errors: string[];
+  }>;
+  warnings: string[];
+  summary: {
+    total: number;
+    valid: number;
+    invalid: number;
+    empty: number;
+  };
+}
+
+// 엑셀 파싱 옵션
+export interface ExcelParseOptions {
+  headerRow?: number;          // 헤더 행 번호 (0부터 시작, 기본값: 자동 감지)
+  scriptColumn?: string;       // 스크립트 컬럼명 또는 인덱스
+  idColumn?: string;           // ID 컬럼명 또는 인덱스
+  filenameColumn?: string;     // 파일명 컬럼명 또는 인덱스
+  avatarIdColumn?: string;     // 아바타 ID 컬럼명 또는 인덱스
+  voiceIdColumn?: string;      // 음성 ID 컬럼명 또는 인덱스
+  defaultAvatarId?: string;    // 기본 아바타 ID
+  defaultVoiceId?: string;     // 기본 음성 ID
+  maxScriptLength?: number;    // 최대 스크립트 길이 (기본값: 5000)
+  skipEmptyRows?: boolean;     // 빈 행 건너뛰기 (기본값: true)
+}
+
 // 에러 타입
 export interface HeyGenError {
   code: string;
